@@ -1,0 +1,4 @@
+interface:
+  display_name: "Myndigheternas skrivregler"
+  short_description: "Svenska skrivregler för offentlig text"
+  default_prompt: "Använd $myndigheternas-skrivregler för att skriva om, granska eller rätta svensk offentlig text. Börja med R1-R5 och kontrollera sedan R6-R11. Lägg till R12 för webbtext och R13 för källor eller rättsliga hänvisningar. Ge förslag först och kort motivering därefter med regel-ID och relevanta D- eller S-ID:n från upplaga 7 och 8."
