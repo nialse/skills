@@ -32,7 +32,7 @@ Load the matching section in `references/contexts.md` when the task is centered 
 
 ## Rules
 
-### R0. Version-gate every recommendation. (Sources: V1, V2, V3, V4, S9)
+### R0. Version-gate every recommendation. (Sources: V1, V2, V3, V4, V5, S9)
 
 Do not recommend syntax or stdlib features newer than the repo can run.
 
@@ -212,9 +212,9 @@ except Exception:
     age = None
 ```
 
-### R5. Choose the mapping idiom that matches the intent. (Sources: D16, D17, D12, S5)
+### R5. Choose the mapping idiom that matches the intent. (Sources: D16, D17, D29, D12, S5)
 
-Use `dict.get()` for optional lookup with a default, `setdefault()` or `defaultdict()` for insert-on-first-use, and R4-style EAFP when absence is exceptional.
+Use `dict.get()` for optional lookup with a default, `Counter` when the main job is counting, `setdefault()` for one-off insert-on-first-use, `defaultdict()` for repeated grouping or accumulation, and R4-style EAFP when absence is exceptional.
 
 GOOD:
 
@@ -222,7 +222,12 @@ GOOD:
 # optional lookup with default
 theme = config.get("theme", "light")
 
-# insert on first use
+# counting
+from collections import Counter
+
+word_counts = Counter(words)
+
+# one-off insert on first use
 groups.setdefault(color, []).append(item)
 
 # repeated grouping
@@ -236,6 +241,14 @@ for color, item in pairs:
 BAD:
 
 ```python
+# manual counting
+word_counts = {}
+for word in words:
+    if word in word_counts:
+        word_counts[word] += 1
+    else:
+        word_counts[word] = 1
+
 # manual defaulting
 if "theme" in config:
     theme = config["theme"]
@@ -445,11 +458,33 @@ Annotations are for readers and tools, not runtime enforcement. On supported Pyt
 
 ### R13. Use `match` when structure is the subject, not as a decorative `if` chain. (Sources: D20, V3, S8)
 
-Reach for `match` when you are dispatching on literals, mappings, sequences, or attribute patterns. Keep ordinary conditionals when they are already the clearest shape. See `references/extended-examples.md#r13`.
+Keep ordinary `if` and `elif` for simple scalar branching. Reach for `match` when you are dispatching on literals, mappings, sequences, or attribute patterns, and the structure itself is the subject. See `references/extended-examples.md#r13`.
 
 ### R14. Avoid wildcard imports. (Sources: D4)
 
 Wildcard imports hide where names came from and make code harder to read and analyze. See `references/extended-examples.md#r14`.
+
+### R15. Prefer f-strings for ordinary inline interpolation on supported Python. (Sources: D30, V5, S11)
+
+On supported Python, prefer f-strings for straightforward inline interpolation. Keep other formatting styles when API semantics, deferred formatting, or translation workflows make them the better fit.
+
+GOOD:
+
+```python
+# repo supports Python >= 3.6
+message = f"Hello, {name}! You have {count} messages."
+
+# readable formatting spec
+summary = f"{ratio:.2%} complete"
+```
+
+BAD:
+
+```python
+message = "Hello, %s! You have %d messages." % (name, count)
+
+message = "Hello, {}! You have {} messages.".format(name, count)
+```
 
 ## Review Use
 
