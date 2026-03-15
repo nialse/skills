@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pythonic Code Style"
+  short_description: "Apply current, verified Pythonic style"
+  default_prompt: "Use $pythonic-code-style to write or review modern Python code with current Pythonic idioms and anti-pattern checks."
