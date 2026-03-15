@@ -66,7 +66,6 @@ These are deliberate inferences from the direct source rows above. They are vali
 
 | Rule ID | Main claim in `SKILL.md` | Source IDs |
 | --- | --- | --- |
-| R0 | Följ editionsordningen och håll källspårningen kompakt | D1, D4, D5, D16, D17, D18, D19, D27, D28, S2 |
 | R1 | Låt mottagare, syfte och huvudbudskap styra texten | D1, D4, D5, D18, D19, S1 |
 | R2 | Gör meningarna lätta att följa | D2, D10, D18, S1, S6 |
 | R3 | Välj enkla ord och håll myndighetsstilen konkret | D3, D10, D18, S1, S6 |
@@ -81,12 +80,3 @@ These are deliberate inferences from the direct source rows above. They are vali
 | R12 | Aktivera webb- och sociala medier-regler bara när mediet kräver det | D16, D27, S2, S4 |
 | R13 | Aktivera hänvisningsregler bara när texten faktiskt innehåller källor eller rättsliga referenser | D17, D28, S2, S5 |
 
-## Task Coverage
-
-| Task | Primary rules |
-| --- | --- |
-| omskrivning | R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11 |
-| granskning | R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11 |
-| ny text | R1, R3, R5, R2, R4, R6, R7, R8, R9, R10, R11 |
-| webbtext | R1, R2, R3, R4, R5, R12 |
-| källhänvisning | R13, R8, R10, R11 |
