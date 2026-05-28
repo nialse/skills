@@ -2,6 +2,24 @@
 
 Exemplen nedan är nyskrivna för skillen. De är inte hämtade ur böckerna och är inte normativa. Använd dem som mönster när du vill visa hur ett `R*` kan tillämpas eller hur flera regler kan användas i samma svar.
 
+## Innehåll
+
+| Exempel | Regler | Använd när |
+| --- | --- | --- |
+| E1 | `R1`, `R3` | Mottagare, syfte och enklare myndighetsspråk |
+| E2 | `R2` | Meningar, verb och aktör |
+| E3 | `R1`, `R5` | Rubriker som hjälper läsaren |
+| E4 | `R4` | Pronomen och inkluderande syftning |
+| E5 | `R7` | Sammansättningar med flerordsförled |
+| E6 | `R8` | Stor och liten bokstav |
+| E7 | `R9` | Förkortningar vid första omnämnande |
+| E8 | `R10` | Datum i löpande text |
+| E9 | `R11` | Skiljetecken efter funktion |
+| E10 | `R12` | Informativ länktext |
+| E11-E12 | `R13` | Källhänvisningar och laghänvisningar |
+| E13-E15 | `R4`, `R7`, `R11`, `R13` | Tilltal, konsekvens och citat |
+| E16 | `R1`-`R5`, `R9`-`R11` | Samlad omskrivning och granskning |
+
 ## E1. Mottagare och syfte
 
 Regler: `R1`, `R3`

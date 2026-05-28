@@ -1,21 +1,28 @@
 ---
 name: myndigheternas-skrivregler
-description: Svenska skrivregler för offentlig och myndighetsnära text med fokus på klarspråk, struktur, och ordval.
+description: Använd när du skriver om, granskar eller nyformulerar svensk offentlig eller myndighetsnära text med klarspråk, struktur, ordval, normrättning, webbtext eller käll- och rättshänvisningar. Använd inte för allmän översättning, kreativ copy, akademisk stil eller privat ton om användaren inte ber om svensk myndighetsstil.
 ---
 
 # Myndigheternas skrivregler
 
-Använd [references/source-map.md](references/source-map.md) som källa för regel-ID som `D*`, `S*` och `R*`.
-Använd [references/rule-book-map.md](references/rule-book-map.md) som genväg från ett regel-ID till kapitel i källor.
-Använd [references/rule-index.md](references/rule-index.md) när du behöver välja rätt regler per uppgift eller ämne.
-Använd [references/examples.md](references/examples.md) bara som exempel.
+Använd reglerna nedan först. Läs extra filer bara när uppgiften kräver det:
+
+- [references/source-map.md](references/source-map.md): auktoritativ källkarta för `D*`, `S*` och `R*`; använd när du behöver källstöd, citat eller regelrevision.
+- [references/rule-index.md](references/rule-index.md): välj regler snabbt efter uppgift eller ämne.
+- [references/rule-book-map.md](references/rule-book-map.md): kompletterande mappning från `R*` till kapitel och sidor när du behöver mer kontext än regeltexten ger.
+- [references/examples.md](references/examples.md): använd bara när användaren ber om exempel eller när du behöver ett outputmönster.
 
 ## Arbetsgång
 
-- Omskrivning eller granskning av text: börja med `R1`-`R5`. Gå sedan vidare till `R6`-`R11`. Använd `R12` eller `R13` bara om texttypen kräver det.
-- Ny text: börja med `R1`, `R3` och `R5`. Kontrollera sedan `R2`, `R4` och `R6`-`R11`. Lägg till `R12` eller `R13` vid behov.
-- Webbtext: använd `R1`-`R5` tillsammans med `R12`.
-- Källhänvisning eller rättslig hänvisning: använd `R13` och komplettera vid behov med `R8`, `R10` eller `R11`.
+| Uppgift | Regler | Läs extra fil |
+| --- | --- | --- |
+| Omskrivning eller granskning | Börja med `R1`-`R5`; kontrollera sedan `R6`-`R11`. | Ingen, om källor inte efterfrågas. |
+| Ny text | Börja med `R1`, `R3`, `R5`; kontrollera `R2`, `R4`, `R6`-`R11`. | `rule-index.md` vid osäker texttyp. |
+| Webb eller sociala medier | Använd `R1`-`R5` och `R12`. | `examples.md` bara om du behöver mönster. |
+| Källor, citat eller rättslig hänvisning | Använd `R13`; komplettera med `R8`, `R10`, `R11`. | `rule-book-map.md` eller `source-map.md` vid källkrav. |
+| Normrättning utan omskrivning | Använd `R6`-`R11`; ändra inte ton eller disposition i onödan. | `rule-index.md` vid gränsfall. |
+
+När du svarar med motivering, hänvisa normalt till `R*`. Använd `D*` och `S*` bara när användaren ber om källstöd eller när noggrann källredovisning behövs.
 
 ## Regler
 
@@ -70,4 +77,3 @@ På webben ska rubriker, länkar och stycken fungera vid skumläsning. Länktext
 ### R13. Aktivera hänvisningsregler bara när texten faktiskt innehåller källor eller rättsliga referenser. (Sources: D17, D28, S2, S5)
 
 Gör hänvisningar så informativa att läsaren kan hitta källan. Håll citatets ordalydelse och interpunktion intakta, utom vid uppenbara fel. Ange rubrik och beteckning tydligt vid hänvisning till författningar, propositioner, betänkanden och EU-rättsakter.
-
