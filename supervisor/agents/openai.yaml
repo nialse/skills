@@ -1,0 +1,4 @@
+interface:
+  display_name: "Supervisor"
+  short_description: "Delegate, validate, retry, and audit complex Codex work"
+  default_prompt: "Use $supervisor to orchestrate complex Codex work with subagents, independent validation, retries, and final audit."
