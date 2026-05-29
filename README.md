@@ -4,6 +4,28 @@ This repo contains skills and skill development artifacts.
 
 The repo is meta by design. It is for creating, reviewing, refining, and assessing skills rather than documenting the domain content of any single skill here.
 
+## Install
+
+Use the [skills.sh](https://www.skills.sh) CLI to list or install skills from this repository. The CLI runs through `npx`, so there is no separate CLI installation step.
+
+List the available skills without installing them:
+
+```sh
+npx skills add nialse/skills --list
+```
+
+Install from the collection interactively:
+
+```sh
+npx skills add nialse/skills
+```
+
+Install a specific skill by name:
+
+```sh
+npx skills add nialse/skills --skill pythonic-code-style
+```
+
 ## Purpose
 
 - keep skills structured and reviewable
