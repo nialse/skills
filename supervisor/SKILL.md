@@ -1,119 +1,123 @@
 ---
 name: supervisor
-description: Delegate complex Codex work to subagents, plan parallel and serial subtasks, validate each result independently, retry failed work from scratch, run root cause analysis after repeated failure, make atomic git commits for accepted tasks when working in a git repository, and escalate only when a blocker is proven unaddressable. Use for multi-step tasks requiring orchestration, tracking, validation, retries, parallel execution, or independently audited completion. Do not use for simple single-step tasks.
+description: Delegate complex Codex work to subagents, split work into validated slices, pass explicit task context, classify failures before restarting or discarding work, make checkpoint commits when applicable, and escalate only when a blocker is proven unaddressable. Use for multi-step tasks requiring orchestration, tracking, validation, retries, parallel execution, or independently audited completion. Do not use for simple single-step tasks.
 ---
 
 # Supervisor
 
-Act as the supervisor. Do not perform substantive work yourself. Substantive work includes analysis, implementation, debugging, research, testing, validation, documentation, and technical judgment based on inspecting task details. Delegate all substantive work to subagents.
+Act as the supervisor. Do not perform substantive work yourself. Substantive work includes analysis, implementation, debugging, research, testing, validation, documentation, and technical judgment based on task details. Delegate all substantive work to subagents.
 
 Your work is orchestration only: plan, delegate, track, validate, accept or reject, retry, launch root cause analysis, make accepted-work commits when applicable, and escalate only when necessary.
 
 If subagent tooling is unavailable, do not simulate subagents. Report the missing capability as a blocker for this skill.
 
-## Workflow
+Treat scope as task and artifact scope, not only code or files. Artifacts can include code, docs, research notes, decisions, commands, logs, screenshots, transcripts, commits, generated outputs, and user-facing text.
 
-First, launch a planning subagent to return:
+## Planning
 
-- subtasks
+First, launch a planning subagent. It must return:
+
+- task slices
 - dependencies
 - parallel groups
 - serial order
 - acceptance criteria
 - recommended subagent type
-- validation strategy
-- git commit boundaries, if the workspace is a git repository
+- review and validation method for each slice
+- evidence required for acceptance
+- checkpoint or commit boundaries when applicable
 
-No task is complete until it has been independently validated, accepted, and committed when git is used.
+For broad tasks, or tasks touching shared routing, evaluator logic, shared policy, or other cross-cutting behavior, run an early slice audit before coding. Each slice should have one behavior or deliverable change, one validator, one evidence bundle, and one checkpoint.
+
+## Context Packet
+
+Every worker, validator, RCA, and final audit prompt must include a compact context packet:
+
+- objective
+- accepted scope
+- excluded scope and known unrelated state
+- in-scope artifacts and expected evidence
+- prior decisions and accepted dependencies
+- validation method and checkpoint boundary
 
 ## Delegation
 
-For each ready task, launch a worker subagent.
+For each ready slice, launch a worker subagent. Run independent slices in parallel. Run dependent slices only after their dependencies are accepted.
 
-Run independent ready tasks in parallel. Run dependent tasks only after their dependencies are accepted.
-
-Each worker prompt must include:
-
-- exact scope
-- in-scope files or artifacts
-- out-of-scope files or artifacts
-- acceptance criteria
-- expected output
-- instruction not to expand scope
-- instruction to report blockers instead of guessing
+Each worker prompt must include the context packet, acceptance criteria, expected output, instruction not to expand scope, and instruction to report blockers instead of guessing.
 
 ## Validation
 
 After a worker submits work, launch a separate validator subagent. The validator must not be the worker that completed the work.
 
-The validator must inspect the result against the acceptance criteria and return one decision:
+Each validator prompt must include the context packet, worker evidence, and the planned review and validation method. Validators must inspect the accepted scope, verify required evidence, and run fresh probes for nearby regressions when the planned method calls for it.
+
+The validator must return one decision:
 
 - accept
 - reject
+- context-defect
 
-If validation rejects the work, discard the attempt. Do not patch it. Launch a new worker to redo the task from scratch using the original scope and the validator's failure evidence.
+Use `context-defect` only when missing prompt context caused the problem and no task defect was found. Allow one scoped revalidation with the corrected context.
 
-## Git Commits
+## Failure Handling
 
-When the workspace is inside a git repository, make an atomic commit for each completed task or subtask after it is accepted. Skip this section if git is not used.
+Before retrying, classify the failure:
 
-For each accepted task or subtask:
+- missing context
+- fixable defect
+- unfixable defect
+- scope drift
+- bad acceptance criteria
+- environment, tool, permission, or repository constraint
+- task needs further subdivision
+
+Restart when the plan, prompt, context, or criteria were wrong but the artifact state is recoverable and trustworthy. Discard when work exceeded scope, introduced unrelated changes, relied on unverified assumptions, or cannot be trusted. Do not use discarded work downstream.
+
+Retry a failed slice up to three times. Each retry must use corrected context and a new worker unless the failure was only a context-defect revalidation. After three failed attempts, launch RCA.
+
+## Checkpoints
+
+When the workspace is inside a git repository, make an atomic commit for each accepted slice. Skip this section if git is not used.
+
+For each accepted slice:
 
 - inspect git status and diff before staging
 - stage only files and hunks that belong to the accepted scope
-- exclude rejected attempts, unrelated changes, generated noise, and user changes outside the accepted scope
-- create one commit for that single accepted task or subtask
-- use a commit message that describes only that accepted task or subtask
+- exclude rejected attempts, unrelated changes, generated noise, and user changes outside scope
+- create one commit for that single accepted slice
 - do not commit if validation is missing, rejected, or based on unverified assumptions
 - do not rewrite, squash, amend, or reorder existing commits unless explicitly requested
 
-If the repository has pre-existing unrelated changes, leave them untouched. If accepted work cannot be staged without including unrelated changes, launch a subagent to determine a safe staging strategy. Escalate only if the separation is genuinely impossible.
-
-## Retry Policy
-
-Retry a failed task up to three times.
-
-Each retry must use a new worker subagent and start from scratch.
-
-After three failed attempts, stop normal retries and launch a root cause analysis subagent.
+Pre-existing unrelated changes do not need to make the whole worktree clean. Document them in the context packet and leave them untouched. If accepted work cannot be separated from unrelated changes, launch a safe staging strategy subagent. Escalate only if separation is genuinely impossible.
 
 ## Root Cause Analysis
 
-The RCA subagent must determine whether failure is caused by:
-
-- underspecified scope
-- bad or incomplete acceptance criteria
-- missing dependency
-- invalid approach
-- environment, tool, permission, or repository constraint
-- task that needs further subdivision
-- wrong subagent type or prompt
+The RCA subagent must receive the context packet, failed evidence, validation evidence, and failure classification history.
 
 It must return:
 
 - root cause
 - evidence
 - whether the cause is addressable
-- corrective action
-- revised task plan if addressable
+- restart, discard, subdivide, or escalate recommendation
+- revised plan if addressable
 - human question only if truly unaddressable
-
-If addressable, apply the corrective action and continue with new subagents.
 
 Escalate to the human only with exceptional evidence that the root cause cannot be addressed by clarification through subagents, subdivision, dependency work, configuration, validation, or a different worker strategy.
 
 ## Acceptance Rules
 
-Accept a task only when:
+Accept a slice only when:
 
 - scoped work is complete
 - an independent validator accepts it
-- evidence is present
+- required evidence is present
 - dependencies are accepted
 - no blocker remains
-- an atomic commit exists for the accepted task or subtask when git is used
+- checkpoint commit exists when git is used
 
-Reject work when:
+Reject or rework when:
 
 - validation fails
 - evidence is missing
@@ -121,21 +125,22 @@ Reject work when:
 - unrelated changes were introduced
 - acceptance criteria were not met
 - the result depends on an unverified assumption
-- git is used and accepted changes cannot be separated from unrelated changes
-
-Do not use rejected work downstream.
+- the accepted artifact cannot be separated from unrelated state
 
 ## Final Audit
 
 Before responding to the human, launch a final audit subagent.
 
-The audit must verify:
+The audit prompt must include the context packet, slice plan, accepted evidence, validation decisions, rejected or restarted attempts, and checkpoint commits.
+
+The audit must verify against workflow evidence, then spot-check current task state:
 
 - all requested work is completed
 - dependencies were respected
 - accepted work was independently validated
-- rejected work was excluded
-- atomic commits exist for each accepted task or subtask when git is used
+- rejected or discarded work was excluded
+- documented unrelated state stayed excluded
+- checkpoint commits exist when git is used
 - unresolved items are complete or marked needs-human-input with exceptional evidence
 
 ## Final Response
