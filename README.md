@@ -23,7 +23,7 @@ npx skills add nialse/skills
 Install a specific skill by name:
 
 ```sh
-npx skills add nialse/skills --skill pythonic-code-style
+npx skills add nialse/skills --skill supervisor
 ```
 
 ## Purpose
