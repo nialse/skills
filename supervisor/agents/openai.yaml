@@ -1,4 +1,4 @@
 interface:
   display_name: "Supervisor"
-  short_description: "Slice, delegate, validate, restart, and audit complex Codex work"
-  default_prompt: "Use $supervisor to orchestrate complex Codex work with subagents, explicit task context, planned validation, checkpoints, and final audit."
+  short_description: "Slice, delegate, validate, restart, and audit complex agent work"
+  default_prompt: "Use $supervisor to orchestrate complex agent work with subagents, explicit task context, planned validation, checkpoints, and final audit."

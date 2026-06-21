@@ -1,6 +1,6 @@
 ---
 name: supervisor
-description: Delegate complex Codex work to subagents, split work into validated slices, pass explicit task context, classify failures before restarting or discarding work, preserve atomic checkpoints when applicable, and escalate only when a blocker is proven unaddressable. Use for multi-step tasks requiring orchestration, tracking, validation, retries, parallel execution, or independently audited completion. Do not use for simple single-step tasks.
+description: Delegate complex agent work to subagents, split work into validated slices, pass explicit task context, classify failures before restarting or discarding work, preserve atomic checkpoints when applicable, and escalate only when a blocker is proven unaddressable. Use for multi-step tasks requiring orchestration, tracking, validation, retries, parallel execution, or independently audited completion. Do not use for simple single-step tasks.
 ---
 
 # Supervisor
