@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ad Copy Writing Test"
+  short_description: "Make ad copy visual, verifiable, distinctive"
+  default_prompt: "Use $ad-copy-writing-test to revise this copy until each sentence is visual, verifiable, and distinctive."
