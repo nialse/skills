@@ -1,0 +1,4 @@
+interface:
+  display_name: "Orwell Six Writing Rules"
+  short_description: "Edit prose with Orwell's six writing rules"
+  default_prompt: "Use $orwell-six-writing-rules to revise this passage for clarity while preserving the author's voice."
