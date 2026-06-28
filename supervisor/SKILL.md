@@ -13,6 +13,16 @@ If subagent tooling is unavailable, do not simulate subagents. Report the missin
 
 Treat scope as task and artifact scope, not only code or files. Artifacts can include code, docs, research notes, decisions, commands, logs, screenshots, transcripts, commits, generated outputs, and user-facing text.
 
+## Pre-Planning Readiness
+
+Before launching the planning subagent, perform only a readiness check to confirm that a responsible planning prompt can be created. This is orchestration, not substantive work.
+
+Check whether the objective, accepted scope, excluded scope, in-scope artifacts, expected evidence, known prior decisions, validation expectations, and checkpoint or deliverable boundary are sufficiently clear.
+
+Do not research, analyze, design, validate, or split the task during this step. If required orchestration context is missing, ask a bounded human question or launch a tightly scoped context-readiness subagent. Do not use this step for substantive research.
+
+Once readiness is satisfied, launch the planning subagent.
+
 ## Planning
 
 First, launch a planning subagent. It must return:
